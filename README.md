@@ -1,4 +1,5 @@
-# Compiled logs
+# Exercice 1
+## Compiled logs
 ```bash
 mvn compile
 [INFO] Scanning for projects...
@@ -22,7 +23,7 @@ mvn compile
 [INFO] ------------------------------------------------------------------------
 ```
 
-# File tree like structure
+## File tree like structure
 ```bash
 tree .     
 .
