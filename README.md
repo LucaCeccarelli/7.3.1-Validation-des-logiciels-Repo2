@@ -231,3 +231,83 @@ mvn verify
 ```
 #### How is verify different from test and package?
 The `verify` phase runs any checks to verify the package is valid and meets quality criteria, while the `test` phase runs the unit tests and the `package` phase creates the JAR file. 
+
+# Exercice 8
+## Test class
+Test class for `BankAccount.java`:
+```java
+package com.imt.mines;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.Test;
+
+class BankAccountTest {
+
+	@Test
+	void depositMoney_increasesBalance() throws Exception {
+		Person holder = new Person("Alex", 'M', 30, 70.0f, 175.0f, "Black", "Brown", "alex@example.com");
+		BankAccount account = new BankAccount(50.0, 200.0, "2024-01-01", holder);
+
+		account.depositMoney(100.0);
+
+		assertEquals(150.0, account.getBalance(), 0.0001);
+	}
+
+	@Test
+	void withdrawMoney_overBalance_isRejected() throws Exception {
+		Person holder = new Person("Sam", 'F', 28, 60.0f, 165.0f, "Brown", "Green", "sam@example.com");
+		BankAccount account = new BankAccount(50.0, 200.0, "2024-01-01", holder);
+
+		boolean result = account.withdrawMoney(60.0);
+
+		assertFalse(result);
+		assertEquals(50.0, account.getBalance(), 0.0001);
+	}
+}
+```
+## mvn test logs
+```bash
+mvn test   
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.imt.mines:bank-application >-------------------
+[INFO] Building bank-application 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ bank-application ---
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ bank-application ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ bank-application ---
+[INFO] skip non existing resourceDirectory /home/luca/git/BankApplication-Repo2/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ bank-application ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ bank-application ---
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/maven-surefire-common/3.2.5/maven-surefire-common-3.2.5.jar
+...
+Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform/junit-platform-launcher/1.10.2/junit-platform-launcher-1.10.2.jar (184 kB at 2.0 MB/s)
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.imt.mines.BankAccountTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.060 s -- in com.imt.mines.BankAccountTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.631 s
+[INFO] Finished at: 2026-01-09T12:16:30+01:00
+[INFO] ------------------------------------------------------------------------
+```
