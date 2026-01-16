@@ -311,3 +311,44 @@ Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/platform
 [INFO] Finished at: 2026-01-09T12:16:30+01:00
 [INFO] ------------------------------------------------------------------------
 ```
+
+# Exercice 9
+## Prerequisites
+Added the following plugins to the `pom.xml`:
+```xml
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+```
+## mvn test logs with coverage report
+Inside the `JaCoCo` test logs coverage report we can see that `BankAccount` class has a coverage of 20%. 
+I choose to make a test for the method `getDateCreated` because it had a coverage of 0%.
+```java
+	@Test
+	void getDateCreated_returnsConstructorDate() throws Exception {
+		Person holder = new Person("Taylor", 'F', 26, 58.0f, 168.0f, "Blonde", "Hazel", "taylor@example.com");
+		BankAccount account = new BankAccount(50.0, 200.0, "2024-03-15", holder);
+
+		assertEquals("2024-03-15", account.getDateCreated());
+	}
+```
+---
+Now when i run `mvn test` again, the coverage report in `target/site/jacoco/index.html` shows that the `BankAccount` class's method `getDateCreated` has a coverage of 100%.
+But the class `BankAccount` still has a coverage of 20%.

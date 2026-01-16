@@ -18,6 +18,14 @@ class BankAccountTest {
 	}
 
 	@Test
+	void getDateCreated_returnsConstructorDate() throws Exception {
+		Person holder = new Person("Taylor", 'F', 26, 58.0f, 168.0f, "Blonde", "Hazel", "taylor@example.com");
+		BankAccount account = new BankAccount(50.0, 200.0, "2024-03-15", holder);
+
+		assertEquals("2024-03-15", account.getDateCreated());
+	}
+
+	@Test
 	void withdrawMoney_overBalance_isRejected() throws Exception {
 		Person holder = new Person("Sam", 'F', 28, 60.0f, 165.0f, "Brown", "Green", "sam@example.com");
 		BankAccount account = new BankAccount(50.0, 200.0, "2024-01-01", holder);
