@@ -352,3 +352,39 @@ I choose to make a test for the method `getDateCreated` because it had a coverag
 ---
 Now when i run `mvn test` again, the coverage report in `target/site/jacoco/index.html` shows that the `BankAccount` class's method `getDateCreated` has a coverage of 100%.
 But the class `BankAccount` still has a coverage of 20%.
+
+# Exercice 10
+The Github Workflow file `.github/workflows/maven.yml` is as follows:
+```yaml
+name: Maven CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Run tests
+        run: mvn clean test
+
+      - name: Package build
+        run: mvn package
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: target/
+```
